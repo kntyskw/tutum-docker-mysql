@@ -8,6 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install supervisor mysql-server pw
 # Add image configuration and scripts
 ADD start.sh /start.sh
 ADD run.sh /run.sh
+ADD become_slave.sh /become_slave.sh
 ADD update_mycnf.sh /update_mycnf.sh
 ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 ADD my.cnf /etc/mysql/conf.d/my.cnf

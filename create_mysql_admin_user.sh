@@ -13,11 +13,10 @@ echo "=> Creating MySQL admin user with ${_word} password"
 RET=1
 while [[ RET -ne 0 ]]; do
 	sleep 5
-	mysql -uroot -e "CREATE USER 'admin'@'%' IDENTIFIED BY '$PASS'"
+	mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY '$PASS' WITH GRANT OPTION"
 	RET=$?
 done
 
-mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION"
 
 mysqladmin -uroot shutdown
 
