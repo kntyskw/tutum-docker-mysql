@@ -11,5 +11,5 @@ docker run -d --name mysql-slave \
 	-e INNODB_BUFFER_POOL_SIZE=256M \
 	-e MYSQL_PASS=$MYSQL_PASS \
 	-e SERVER_ID=$MYSQL_SERVER_ID \
-	-i -t mysql bash
+	mysql
 
