@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 source common.sh
 
-test -e $MYSQL_PERSISTED_DATA_PATH ||\
-    mkdir -p $MYSQL_PERSISTED_DATA_PATH
+rm -fr $MYSQL_DATA_PATH
+mv $MYSQL_PERSISTED_DATA_PATH ${MYSQL_PERSISTED_DATA_PATH}.`date +%Y%m%d%H%M`
+
+mkdir -p $MYSQL_PERSISTED_DATA_PATH
 
 docker run -i -t \
 	-v $MYSQL_PERSISTED_DATA_PATH:/var/lib/mysql \

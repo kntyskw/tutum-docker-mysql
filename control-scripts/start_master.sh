@@ -20,7 +20,7 @@ fi
 
 docker run -d --name mysql-master \
 	-p 3306:3306 -v $MYSQL_DATA_PATH:/var/lib/mysql \
-	-e INNODB_BUFFER_POOL_SIZE=1G \
+	-e INNODB_BUFFER_POOL_SIZE=20G \
 	-e SERVER_ID=$MYSQL_SERVER_ID \
 	-e MYSQL_PASS=$MYSQL_PASS \
 	mysql
