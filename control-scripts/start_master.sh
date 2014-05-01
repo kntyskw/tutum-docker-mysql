@@ -8,4 +8,5 @@ docker run -d --name mysql-master \
 	-e SERVER_ID=$MYSQL_MASTER_SERVER_ID \
 	-e MYSQL_PASS=$MYSQL_PASS \
 	mysql /start.sh
+	#-i -t mysql bash
 

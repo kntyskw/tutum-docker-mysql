@@ -5,22 +5,24 @@
 echo "=> Creating a user on master '$MASTER_PORT_3306_TCP_ADDR'"
 RET=1
 while [[ RET -ne 0 ]]; do
+	echo "=> [Slave] Connecting to master server"
         sleep 5
 	mysql -uadmin -p${MYSQL_PASS} -h${MASTER_PORT_3306_TCP_ADDR} \
-        	-e "GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%' IDENTIFIED BY '${MYSQL_PASS}';"
+        	-e "GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%' IDENTIFIED BY '${MYSQL_PASS}';" 
 
 	mysql -uadmin -p${MYSQL_PASS} -h${MASTER_PORT_3306_TCP_ADDR} \
-        	-e "SHOW MASTER STATUS\G" > /tmp/master_status
-        RET=$?
+        	-e "SHOW MASTER STATUS\G" > /tmp/master_status 
+	FILE=`cat /tmp/master_status | grep File | cut -f2 -d: | tr -d " "`
+	POSITION=`cat /tmp/master_status | grep Position | cut -f2 -d: | tr -d " "`
+	if [ ${FILE}Z != "Z" ]; then
+		RET=0
+	fi
 done
-
-FILE=`cat /tmp/master_status | grep File | cut -f2 -d: | tr -d " "`
-POSITION=`cat /tmp/master_status | grep Position | cut -f2 -d: | tr -d " "`
 
 echo "Master log file is $FILE"
 echo "Master log position is $POSITION"
 
-echo "=> Becoming Slave of '$MASTER_PORT_3306_TCP_ADDR'"
+echo "=> [Slave] Becoming Slave of '$MASTER_PORT_3306_TCP_ADDR'"
 RET=1
 while [[ RET -ne 0 ]]; do
         sleep 5

@@ -33,6 +33,7 @@ if [ ! -e $MYSQL_DATA_PATH ]; then
 	docker run --link mysql-tmp-master:master -v $MYSQL_PERSISTED_DATA_PATH:/var/lib/mysql \
 		-e SERVER_ID=${MYSQL_SLAVE_SERVER_ID} \
 		-e MYSQL_PASS=${MYSQL_PASS} \
+		-e INNODB_USE_NATIVE_AIO=${INNODB_USE_NATIVE_AIO} \
 		mysql /become_slave.sh
 	docker stop mysql-tmp-master
 	docker rm mysql-tmp-master
